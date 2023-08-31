@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %} Homepage {% endblock %}
+
+{% block content %}
+<!-- Container -->
+<div class="container">
+    <br><br>
+    <div>
+      <img src=https://covers.openlibrary.org/b/isbn/{{book.isbn}}-S.jpg class="book-cover">
+      <h3>{{ book.title }} by {{ book.name }}</h3>
+    </div>
+    <br>
+    <form action="{{ url_for('delete_book', book_id=book.book_id) }}" method="post" >
+      <button class="btn btn-danger" type="submit">Delete</button>
+      <button type="button" class="btn btn-secondary" onclick="goBack()">Cancel Delete</button>
+    </form>
+</div>
+{% endblock %}

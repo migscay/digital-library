@@ -1,0 +1,36 @@
+*, *:before, *:after {
+	 box-sizing: border-box;
+}
+ html {
+	 font-size: 18px;
+	 line-height: 1.5;
+	 font-weight: 300;
+	 color: #333;
+	 font-family: "Nunito Sans", sans-serif;
+}
+ body {
+	 margin: 0;
+	 padding: 0;
+	 height: 100vh;
+	 background-color: #ecf0f9;
+	 background-attachment: fixed;
+}
+
+/* Chrome */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+/* Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.book-cover {
+    float: left;
+    margin-right: 10px;
+    border: solid black 1px;
+    padding: 2px;
+}
+

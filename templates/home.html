@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %} Homepage {% endblock %}
+
+{% block content %}
+<!-- Container -->
+<div class="container">
+    <br>
+    <!-- Search form if there are books in the library -->
+    {% if searchable %}
+        <form action="{{ url_for('home') }}" method="post" >
+            <div class="input-group">
+                <input name="title" class="form-control " placeholder="Enter Book Search" required />
+                <div class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+            </div>
+        </form>
+        <br>
+        <!-- if there are books to display -->
+        {% if books_authors %}
+            {% for books in books_authors %}
+                <div>
+                  <img src=https://covers.openlibrary.org/b/isbn/{{books.isbn}}-S.jpg class="book-cover">
+                  <h3>{{ books.title }} by {{ books.name }}</h3>
+                  <a href="{{ url_for('delete_book', book_id=books.book_id) }}" class="button">
+                    <button type="button" class="btn btn-danger">Delete</button></a>
+                </div>
+                <br>
+            {% endfor %}
+            {% if search_term is not string %}
+                {% if sorting == "book_title" %}
+                    <a href="{{ url_for('home', sorting='book_author') }}" class="button">
+                    <button type="button" class="btn btn-secondary">Sort by Author</button></a>
+                {% else %}
+                    <a href="{{ url_for('home', sorting='book_title') }}" class="button">
+                    <button type="button" class="btn btn-secondary">Sort by Title</button></a>
+                {% endif %}
+            {% endif %}
+        <!-- else no books in library matching search term-->
+        {% else %}
+            <div class="alert alert-secondary" role="alert">
+                There are no books in the Library matching the search: {{ search_term }}
+            </div>
+        {% endif %}
+    <!-- else no books in library -->
+    {% else %}
+        <div class="alert alert-secondary" role="alert">
+            There are no books in the Library.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
