@@ -21,7 +21,7 @@ class Book(db.Model):
 
     book_id = db.Column("book_id", db.Integer, primary_key=True)
     author_id = db.Column(db.Integer, db.ForeignKey('authors.author_id'))
-    isbn = db.Column("isbn", db.Integer)
+    isbn = db.Column("isbn", db.Integer, unique=True, nullable=False)
     title = db.Column("title", db.String(250), nullable=False)
     publication_year = db.Column("publication_year", db.Integer)
 

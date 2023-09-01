@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from data_models import db, Author, Book
+from sqlalchemy.exc import IntegrityError
 import os
 
 app = Flask(__name__)
@@ -70,11 +71,17 @@ def add_book():
             title=request.form['title'],
             publication_year=request.form['publication_year']
         )
-        print(f"after Posting {request.form}")
-        db.session.add(book)
-        db.session.commit()
 
-        message = f"New Book Added  {book.__str__()}"
+        # if unique constraint on ISBN is violated
+        try:
+            db.session.add(book)
+            db.session.commit()
+            author = db.session.query(Author).filter(Author.author_id == book.author_id).one()
+            message = f"New Book Added(isbn = {book.isbn}, title = {book.title}, author = {author.name})"
+        except IntegrityError:
+            db.session.rollback()
+            message = f"Book not Added ISBN {book.isbn} already existing on another book."
+
         return render_template('add_book.html', authors=authors, message=message)
 
     return render_template('add_book.html', authors=authors)
